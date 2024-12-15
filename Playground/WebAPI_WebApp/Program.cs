@@ -1,4 +1,3 @@
-using Database_Redis;
 using StackExchange.Redis;
 using WebAPI_WebApp.Models;
 
@@ -16,7 +15,7 @@ builder.Services.AddStackExchangeRedisCache(opt =>
     };
 
 });
-builder.Services.AddRedisDependencies();
+// builder.Services.AddRedisDependencies();
 
 var app = builder.Build();
 
