@@ -77,7 +77,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Database_MongoDB\Database_MongoDB.csproj" />
       <ProjectReference Include="..\Database_Redis\Database_Redis.csproj" />
     </ItemGroup>
 

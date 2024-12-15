@@ -1,7 +1,7 @@
 using AutoMapper;
-using Domain.Entities;
+using MongoDB.Shared.Entities;
 
-namespace WebAPI_WebApp.Models;
+namespace MongoDB.AspNet.Models;
 
 public class MappingProfile : Profile
 {

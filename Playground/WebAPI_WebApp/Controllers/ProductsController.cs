@@ -1,7 +1,5 @@
 using System.Diagnostics;
 using AutoMapper;
-using Database_MongoDB.Models;
-using Database_MongoDB.Repositories;
 using Database_Redis.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;

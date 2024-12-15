@@ -1,4 +1,4 @@
-namespace Domain.Entities;
+namespace MongoDB.Shared.Entities;
 
 public class Product : BaseEntity
 {

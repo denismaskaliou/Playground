@@ -1,6 +1,5 @@
 using System.Text.Json;
 using AutoMapper;
-using Database_MongoDB.Repositories;
 using Domain.Entities;
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -12,21 +11,18 @@ public class ProductsCachedService
     
     private readonly IMapper _mapper;
     private readonly IDistributedCache _distributedCache;
-    private readonly ProductsRepository _productRepository;
 
     public ProductsCachedService(
         IMapper mapper,
-        IDistributedCache distributedCache,
-        ProductsRepository productRepository)
+        IDistributedCache distributedCache)
     {
         _mapper = mapper;
         _distributedCache = distributedCache;
-        _productRepository = productRepository;
     }
 
     public async Task<Product> CreateProductAsync(Product product)
     {
-        product = await _productRepository.CreateProductAsync(product);
+        // product = await _productRepository.CreateProductAsync(product);
         await  _distributedCache.RefreshAsync(ProductCacheKey);
         
         return product;
@@ -39,7 +35,7 @@ public class ProductsCachedService
         if (!string.IsNullOrEmpty(cachedResult))
             return JsonSerializer.Deserialize<IList<Product>>(cachedResult)!;
         
-        var products = await _productRepository.GetProductsAsync();
+        var products = new List<Product>();
         await _distributedCache.SetStringAsync(
             ProductCacheKey, 
             JsonSerializer.Serialize(products), 

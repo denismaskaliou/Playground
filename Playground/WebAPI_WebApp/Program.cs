@@ -1,5 +1,3 @@
-using Database_MongoDB;
-using Database_MongoDB.Repositories;
 using Database_Redis;
 using StackExchange.Redis;
 using WebAPI_WebApp.Models;
@@ -7,7 +5,6 @@ using WebAPI_WebApp.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<ProductsRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddStackExchangeRedisCache(opt =>
 {
@@ -19,7 +16,6 @@ builder.Services.AddStackExchangeRedisCache(opt =>
     };
 
 });
-builder.Services.AddMongoDbDependencies();
 builder.Services.AddRedisDependencies();
 
 var app = builder.Build();

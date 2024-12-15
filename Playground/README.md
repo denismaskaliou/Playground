@@ -1,26 +1,28 @@
-# RabbitMQ in Docker
+# MongoDB in Docker
 
-This guide provides simple steps to run RabbitMQ in a Docker container and access its management interface.
+This guide provides simple steps to run MongoDB in a Docker container and connect to it.
 
 ---
 
 ## Usage
 
-Follow the steps below to set up and use RabbitMQ in Docker.
+Follow the steps below to set up and use MongoDB in Docker.
 
-### Running the RabbitMQ Container
+### Running the MongoDB Container
 
-Run the following command to start a RabbitMQ container with the management interface enabled:
+Run the following command to start a MongoDB container with a root username and password:
 
 ```bash
-docker run -d --name rabbitmq \
-  -p 5672:5672 \
-  -p 15672:15672 \
-  rabbitmq:management
+docker run -d --name mongodb \
+  -p 27017:27017 \
+  -e MONGO_INITDB_ROOT_USERNAME=admin \
+  -e MONGO_INITDB_ROOT_PASSWORD=1234 \
+  mongo
 ```
 
-Access the RabbitMQ Management Interface at http://localhost:15672.
+### Connecting to MongoDB
 
-### Default Credentials:  
-Username: guest  
-Password: guest
+You can connect to MongoDB using the MongoDB shell from inside the container. Run:
+```bash
+docker exec -it mongodb mongosh -u admin -p secret
+```
