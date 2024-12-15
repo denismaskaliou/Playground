@@ -12,8 +12,14 @@ public class RabbitMqHostedService(
     RabbitMqConsumer rabbitMqConsumer
 ) : BackgroundService
 {
+    private bool ConsumerIsActive => serviceProvider
+        .GetRequiredService<IOptions<RabbitMqOptions>>().Value
+        .ConsumerIsActive;
+    
     protected override async Task ExecuteAsync(CancellationToken token)
     {
+        if (!ConsumerIsActive) return;
+
         await rabbitMqConsumer.ConsumeAsync<RabbitMqMessageDto>(ConsumeMessageAsync, token);
     }
 
@@ -21,7 +27,8 @@ public class RabbitMqHostedService(
     {
         await using var scope = serviceProvider.CreateAsyncScope();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<RabbitMqHostedService>>();
-        
+
         logger.LogInformation("Consume message: {Message}", message?.Message);
     }
+
 }
