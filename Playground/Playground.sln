@@ -10,9 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI_WebApp", "WebAPI_WebApp\WebAPI_WebApp.csproj", "{AEE17C94-AC40-47B7-9CFE-C76F76F4906D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Redis", "Redis", "{12C5F775-7259-49AF-BDD3-A575A92386EA}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database_Redis", "Database_Redis\Database_Redis.csproj", "{50EC3501-5687-4574-B534-1E6013852631}"
 EndProject
@@ -31,10 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Shared", "RabbitMQ
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDB", "MongoDB", "{82368BCD-27EC-4180-A63C-99BC7077C620}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
+		MongoDB\README.md = MongoDB\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB.AspNet", "MongoDB.AspNet\MongoDB.AspNet.csproj", "{31BF6664-2E3E-491E-9217-3782D5659922}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB.AspNet", "MongoDB\MongoDB.AspNet\MongoDB.AspNet.csproj", "{31BF6664-2E3E-491E-9217-3782D5659922}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB.Shared", "MongoDB\MongoDB.Shared\MongoDB.Shared.csproj", "{343C1C0E-DEEE-4D10-916F-EBF0CD68524E}"
 EndProject
