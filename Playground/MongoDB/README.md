@@ -24,5 +24,5 @@ docker run -d --name mongodb \
 
 You can connect to MongoDB using the MongoDB shell from inside the container. Run:
 ```bash
-docker exec -it mongodb mongosh -u admin -p secret
+docker exec -it mongodb mongosh -u admin -p 1234
 ```
