@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Functions.App;
@@ -8,12 +8,15 @@ namespace Functions.App;
 public class Function(ILogger<Function> logger)
 {
     [Function("Playground")]
-    public async Task<ObjectResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "api/tasks/get-text")] HttpRequest request)
+    public async Task<HttpResponseData> Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "tasks/get-text")]
+        HttpRequestData request)
     {
-        var text = await request.ReadFromJsonAsync<string>();
-        logger.LogInformation($"Playground function read: {text}");
-        
-        return new OkObjectResult(text);
+        logger.LogInformation($"Playground function executed");
+
+        var response = request.CreateResponse(HttpStatusCode.OK);
+        await response.WriteStringAsync("Text from body: Hello World!");
+
+        return response;
     }
 }

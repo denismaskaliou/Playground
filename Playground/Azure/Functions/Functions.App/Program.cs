@@ -1,15 +1,7 @@
 using Microsoft.Extensions.Hosting;
 
-namespace Functions.App;
+var host = new HostBuilder()
+    .ConfigureFunctionsWorkerDefaults()
+    .Build();
 
-public static class Program
-{
-    public static void Main(string[] args)
-    {
-        var host = new HostBuilder()
-            .ConfigureFunctionsWorkerDefaults()
-            .Build();
-
-        host.Run();
-    }
-}
+host.Run();
