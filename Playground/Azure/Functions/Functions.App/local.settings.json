@@ -1,7 +1,7 @@
 {
     "IsEncrypted": false,
     "Values": {
-        "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=playgroundstaccount;AccountKey=aKAFRo+fAdcy+kHcBuAbfW3vbPsoT13EWW5mRsucVllcGUa6b1VTPIQZpRM6eSb+f4dtqRxt1i3r+ASt2vfioA==;EndpointSuffix=core.windows.net",
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
     }
 }
