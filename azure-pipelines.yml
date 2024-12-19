@@ -18,7 +18,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    projects: 'Azure/Functions/Functions.App/Functions.App.csproj'
+    projects: 'Playground/Azure/Functions/Functions.App/Functions.App.csproj'
     arguments: '--output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 
