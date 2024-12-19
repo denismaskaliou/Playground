@@ -9,7 +9,7 @@ public class Function(ILogger<Function> logger)
 {
     [Function("Playground")]
     public async Task<HttpResponseData> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "tasks/get-text")]
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "tasks/get-text")]
         HttpRequestData request)
     {
         logger.LogInformation($"Playground function executed");
