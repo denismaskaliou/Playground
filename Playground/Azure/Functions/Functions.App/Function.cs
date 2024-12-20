@@ -1,22 +1,33 @@
 using System.Net;
+using CosmosDb.Shared.Repository;
+using Functions.App.Models;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Functions.App;
 
-public class Function(ILogger<Function> logger)
+public class Function(
+    ILogger<Function> logger,
+    ICosmosDbRepository<Order> ordersRepository)
 {
-    [Function("Playground")]
+    [Function("SubmitOrder")]
     public async Task<HttpResponseData> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "tasks/get-text")]
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "tasks/submit-orders")]
         HttpRequestData request)
     {
-        logger.LogInformation($"Playground function executed");
+        logger.LogInformation("Submit order request");
+        
+        var order = new Order
+        {
+            Name = "Test1",
+            OrderStatus = OrderStatus.Submitted,
+            UpdatedDate = DateTime.UtcNow,
+            CreatedDate = DateTime.UtcNow
+        };
+        
+        await ordersRepository.CreateAsync(order);
 
-        var response = request.CreateResponse(HttpStatusCode.OK);
-        await response.WriteStringAsync("Text from body: Hello World!");
-
-        return response;
+        return request.CreateResponse(HttpStatusCode.Accepted);
     }
 }
