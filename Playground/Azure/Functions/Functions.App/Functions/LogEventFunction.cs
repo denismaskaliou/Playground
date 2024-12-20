@@ -19,18 +19,18 @@ public class LogEventFunction(
     {
         logger.LogInformation("Log event");
 
-        var auditLogDto = message.Body.ToObjectFromJson<AuditLogDto>();
-        if (auditLogDto is null)
+        var submittedMessage = message.Body.ToObjectFromJson<OrderSubmittedMessage>();
+        if (submittedMessage is null)
         {
-            logger.LogError("Can't parse audit log message");
+            logger.LogError("Can't parse submitted message");
             return;
         }
 
         var order = new AuditLog
         {
-            EntityId = auditLogDto.EntityId,
-            EventName = auditLogDto.EventName,
-            CreatedDate = auditLogDto.CreatedDate
+            EntityId = submittedMessage.OrderId,
+            EventName = submittedMessage.EventName,
+            CreatedDate = submittedMessage.CreatedDate
         };
 
         await auditLogsRepository.CreateAsync(order);

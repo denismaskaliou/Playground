@@ -28,6 +28,7 @@
         <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\Blob\Blob.Shared\Blob.Shared.csproj" />
       <ProjectReference Include="..\..\CosmosDb\CosmosDb.Shared\CosmosDb.Shared.csproj" />
       <ProjectReference Include="..\..\ServiceBus\ServiceBus.Shared\ServiceBus.Shared.csproj" />
     </ItemGroup>

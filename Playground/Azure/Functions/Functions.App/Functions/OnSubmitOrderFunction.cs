@@ -25,9 +25,9 @@ public class OnSubmitOrderFunction(
 
         foreach (var order in orders)
         {
-            var eventLogDto = new AuditLogDto
+            var eventLogDto = new OrderSubmittedMessage
             {
-                EntityId = order.Id,
+                OrderId = order.Id,
                 EventName = "OrderSubmitted",
                 CreatedDate = DateTime.UtcNow
             };
