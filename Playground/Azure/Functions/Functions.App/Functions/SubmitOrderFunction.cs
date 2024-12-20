@@ -1,23 +1,24 @@
 using System.Net;
 using CosmosDb.Shared.Repository;
+using Functions.App.Entities;
 using Functions.App.Models;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Functions.App;
+namespace Functions.App.Functions;
 
-public class Function(
-    ILogger<Function> logger,
+public class SubmitOrderFunction(
+    ILogger<SubmitOrderFunction> logger,
     ICosmosDbRepository<Order> ordersRepository)
 {
     [Function("SubmitOrder")]
-    public async Task<HttpResponseData> Run(
+    public async Task<HttpResponseData> RunAsync(
         [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "tasks/submit-orders")]
         HttpRequestData request)
     {
         logger.LogInformation("Submit order request");
-        
+
         var order = new Order
         {
             Name = "Test1",
@@ -25,7 +26,7 @@ public class Function(
             UpdatedDate = DateTime.UtcNow,
             CreatedDate = DateTime.UtcNow
         };
-        
+
         await ordersRepository.CreateAsync(order);
 
         return request.CreateResponse(HttpStatusCode.Accepted);

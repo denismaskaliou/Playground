@@ -1,6 +1,7 @@
 using CosmosDb.Shared.Entities;
+using Functions.App.Models;
 
-namespace Functions.App.Models;
+namespace Functions.App.Entities;
 
 public class Order: BaseEntity
 {

@@ -10,7 +10,7 @@ public class ServiceBusMessageProducer(ServiceBusBaseOptions options) : IMessage
 
     public async Task SendMessageAsync<T>(T message)
     {
-        await using var sender = _client.CreateSender(options.QueueName);
+        await using var sender = _client.CreateSender(options.QueueName ?? options.TopicName);
         
         var body = JsonSerializer.Serialize(message);
         var busMessage = new ServiceBusMessage(body);

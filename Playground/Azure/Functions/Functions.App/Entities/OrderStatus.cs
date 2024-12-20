@@ -1,4 +1,4 @@
-namespace Functions.App.Models;
+namespace Functions.App.Entities;
 
 public enum OrderStatus
 {

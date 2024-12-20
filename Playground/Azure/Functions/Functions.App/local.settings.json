@@ -3,6 +3,8 @@
     "Values": {
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-        "AppConfigConnectionString": "UserSecrets"
+        "AppConfigConnectionString": "UserSecrets",
+        "CosmosDb:ConnectionString": "AccountEndpoint=https://playground-cosmos-db-account.documents.azure.com:443/;AccountKey=7MbV9HDIab0bk8c1vDoA4fE4y1Iei4eo3qEcmbAVr3rUMgpQfRwvPvDxwhha47i14k0fDp5VijUcACDbOKvHFw==;",
+        "ServiceBus:ConnectionString": "Endpoint=sb://playground-service-bus-dev.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=dAjrNRNKlas6kRoVzIO5b8YtW/TXYNQ8i+ASbFoFfhc="
     }
 }
