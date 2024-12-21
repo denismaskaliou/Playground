@@ -4,7 +4,6 @@ using Functions.App.Entities;
 using Functions.App.Models;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Functions.App.Functions;
 
