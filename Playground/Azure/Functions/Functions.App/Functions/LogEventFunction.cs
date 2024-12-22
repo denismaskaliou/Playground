@@ -28,8 +28,8 @@ public class LogEventFunction(
         var order = new AuditLog
         {
             EntityId = submittedMessage.OrderId,
-            EventName = submittedMessage.EventName,
-            CreatedDate = submittedMessage.CreatedDate
+            EventName = AuditType.Created,
+            ModifiedAt = submittedMessage.CreatedDate
         };
 
         await auditLogsRepository.CreateAsync(order);

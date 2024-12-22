@@ -23,7 +23,7 @@ public class SubmitOrderFunction(
         {
             Name = "Test1",
             OrderStatus = OrderStatus.Submitted,
-            UpdatedDate = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow,
             CreatedDate = DateTime.UtcNow
         };
 

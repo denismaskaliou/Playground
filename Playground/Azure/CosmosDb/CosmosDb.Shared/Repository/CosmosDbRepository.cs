@@ -14,9 +14,18 @@ public class CosmosDbRepository<T> : ICosmosDbRepository<T> where T : BaseEntity
         _container = client.GetContainer(options.DatabaseName, containerName);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public async Task<IList<T>> GetAllAsync()
     {
-        return null!;
+        var query = _container.GetItemQueryIterator<T>();
+        var results = new List<T>();
+
+        while (query.HasMoreResults)
+        {
+            var response = await query.ReadNextAsync();
+            results.AddRange(response.Resource);
+        }
+
+        return results;
     }
 
     public async Task<T> GetByIdAsync(string id)

@@ -3,10 +3,11 @@ using Functions.App.Models;
 
 namespace Functions.App.Entities;
 
-public class Order: BaseEntity
+public class Order : BaseEntity
 {
     public string Name { get; init; } = default!;
     public OrderStatus OrderStatus { get; init; }
-    public DateTime UpdatedDate { get; init; }
-    public DateTime CreatedDate { get; init; } 
+    public DateTime UpdatedAt { get; init; }
+    public string UpdatedBy { get; init; } = default!;
+    public DateTime CreatedDate { get; init; }
 }
