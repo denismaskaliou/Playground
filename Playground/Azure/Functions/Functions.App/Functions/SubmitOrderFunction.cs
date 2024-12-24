@@ -21,7 +21,7 @@ public class SubmitOrderFunction(
 
         var order = new Order
         {
-            Name = "Test1",
+            Name = Guid.NewGuid().ToString(),
             OrderStatus = OrderStatus.Submitted,
             UpdatedAt = DateTime.UtcNow,
             CreatedDate = DateTime.UtcNow

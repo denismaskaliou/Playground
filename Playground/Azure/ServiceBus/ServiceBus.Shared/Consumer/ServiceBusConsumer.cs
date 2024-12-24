@@ -25,7 +25,6 @@ public class ServiceBusConsumer(ServiceBusBaseOptions options): IServiceBusConsu
 
     private Task ErrorHandler(ProcessErrorEventArgs args)
     {
-        
         return Task.CompletedTask;
     }
 
