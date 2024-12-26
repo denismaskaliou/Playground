@@ -82,6 +82,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{5F540C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground.Shared", "Shared\Playground.Shared\Playground.Shared.csproj", "{4AC2B899-2CF7-4595-A942-B16230BB210A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostgreSQL", "PostgreSQL", "{1202ED32-6660-438F-B6C6-11B7EF06976E}"
+	ProjectSection(SolutionItems) = preProject
+		PostgreSQL\README.md = PostgreSQL\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSQL.Tests", "PostgreSQL\PostgreSQL.Tests\PostgreSQL.Tests.csproj", "{AA5C2D54-09C9-44D5-9735-B8FA48776BDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,6 +171,10 @@ Global
 		{4AC2B899-2CF7-4595-A942-B16230BB210A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AC2B899-2CF7-4595-A942-B16230BB210A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AC2B899-2CF7-4595-A942-B16230BB210A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA5C2D54-09C9-44D5-9735-B8FA48776BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA5C2D54-09C9-44D5-9735-B8FA48776BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA5C2D54-09C9-44D5-9735-B8FA48776BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA5C2D54-09C9-44D5-9735-B8FA48776BDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -197,5 +208,6 @@ Global
 		{15A6477A-8AA3-4181-80EC-3C3205552A12} = {43B2F053-E836-4E4C-8EF0-11821231A413}
 		{B491863B-7CEF-4E48-AC1E-0BEF5A1DE0C4} = {5CF37908-8C74-49A0-8675-FAFD20493E50}
 		{4AC2B899-2CF7-4595-A942-B16230BB210A} = {5F540C69-E6EB-4DEE-A412-B38444CE001D}
+		{AA5C2D54-09C9-44D5-9735-B8FA48776BDC} = {1202ED32-6660-438F-B6C6-11B7EF06976E}
 	EndGlobalSection
 EndGlobal

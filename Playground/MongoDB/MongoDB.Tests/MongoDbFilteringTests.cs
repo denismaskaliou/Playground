@@ -1,13 +1,24 @@
+using System.Diagnostics;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDB.Shared.Entities;
 using MongoDB.Tests.Context;
+using MongoDB.Tests.Scripts;
+using Xunit.Abstractions;
 
 namespace MongoDB.Tests;
 
-public class MongoDbFilteringTests(MongoDbTestContext testContext) : IClassFixture<MongoDbTestContext>
+public class MongoDbFilteringTests(
+    MongoDbTestContext testContext,
+    ITestOutputHelper output) : IClassFixture<MongoDbTestContext>
 {
-    private IMongoCollection<Product> Products => testContext.Database.GetCollection<Product>("products-tests");
+    private IMongoCollection<Order> Orders => testContext.Database.GetCollection<Order>("Orders");
+    private IMongoCollection<User> Users => testContext.Database.GetCollection<User>("Users");
+
+    [Fact]
+    public async Task InitData_Async()
+    {
+        await testContext.InitDataAsync(shouldSuppress: false);
+    }
 
     [Theory]
     [InlineData(true)]
@@ -33,33 +44,45 @@ public class MongoDbFilteringTests(MongoDbTestContext testContext) : IClassFixtu
         );
 
         Assert.Equal(collectionExists, await collections.AnyAsync());
-        
+
         await testContext.Database.DropCollectionAsync(collectionName);
     }
 
     [Fact]
-    public async Task FilterByNameAsync()
+    public async Task Find_BySubEntityName_ReturnShoes_Async()
     {
-        // Arrange
-        await Products.InsertManyAsync([
-            new Product { Name = "Test1", Price = 45 },
-            new Product { Name = "Test2", Price = 490 },
-        ]);
+        var filter = Builders<Order>.Filter.ElemMatch(
+            order => order.Products,
+            t => t.Name == "Shoes"
+        );
 
-        // Act
-        var cursor = await Products.FindAsync(p => p.Price == 45);
-        var actual = await cursor.FirstAsync();
+        var projection = Builders<Order>.Projection
+            .Include(t => t.Products);
 
-        // Assert
-        Assert.Equal(45, actual.Price);
-        Assert.Equal("Test1", actual.Name);
+
+        // var explainResult = Orders.Find(filter).Project(projection).ToString();
+
+        var timer = Stopwatch.StartNew();
+        
+        _ = await Orders.Find(filter).Project(projection).ToListAsync();
+
+        timer.StopAndPrint(output);
     }
 
-    static async Task<bool> CollectionExistsAsync(IMongoDatabase database, string collectionName)
+    [Fact]
+    public async Task CreateIndex_CreateIndexByProductName_Async()
     {
-        var filter = new BsonDocument("name", collectionName);
-        var collections = await database.ListCollectionsAsync(new ListCollectionsOptions { Filter = filter });
+        var indexModel = new CreateIndexModel<Order>(
+            Builders<Order>.IndexKeys.Ascending("Products.name"),
+            new CreateIndexOptions { Name = "pl_index_products_name" }
+        );
 
-        return await collections.AnyAsync();
+        await Orders.Indexes.CreateOneAsync(indexModel);
+    }
+
+    [Fact]
+    public async Task DropIndex_DropIndexByProductName_Async()
+    {
+        await Orders.Indexes.DropOneAsync("pl_index_products_name");
     }
 }
