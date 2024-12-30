@@ -6,23 +6,24 @@ using Xunit.Abstractions;
 
 namespace MongoDB.Tests.Context;
 
-public class MongoDbTestContext: IDisposable
+public class MongoDbTestContext : IDisposable
 {
     private const string ConnectionString = "mongodb://admin:1234@localhost:27017/";
     private const string DatabaseName = "playground";
-    
+    private readonly OrderProductsAndUsersScript _script;
+
     public IMongoDatabase Database { get; set; }
-    
+
     public MongoDbTestContext()
     {
-        ProductsMapping.Map();
         var client = new MongoClient(ConnectionString);
         Database = client.GetDatabase(DatabaseName);
+        _script = new OrderProductsAndUsersScript(Database);
     }
 
     public async Task InitDataAsync(bool shouldSuppress = true)
     {
-        await new OrderProductsAndUsersScript(Database).CreateAndFillWithMockDataAsync(shouldSuppress);
+        await _script.CreateAndFillWithMockDataAsync(shouldSuppress);
     }
 
     public void Dispose()
