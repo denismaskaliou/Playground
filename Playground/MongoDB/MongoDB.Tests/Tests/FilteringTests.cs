@@ -87,4 +87,20 @@ public class FilteringTests(
 
         var products = await query.ToListAsync();
     }
+
+    [Fact]
+    public async Task Find_ProductsWithReplaceRoot_Async()
+    {
+        Expression<Func<Product, bool>> orderFilter = p =>
+            p.Name == "Shoes" &
+            p.Sizes.Any(s => s.Label == "Small");
+
+        var query = Orders.Aggregate()
+            .Match(Builders<Order>.Filter.ElemMatch(o => o.Products, orderFilter))
+            .Unwind<Order, UnwindProducts>(o => o.Products)
+            .ReplaceRoot(t => t.Products)
+            .Match(orderFilter);
+
+        var products = await query.ToListAsync();
+    }
 }
