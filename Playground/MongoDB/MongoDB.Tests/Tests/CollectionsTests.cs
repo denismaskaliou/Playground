@@ -1,6 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDB.Tests.Context;
+using MongoDB.Tests.Infrastructure;
 
 namespace MongoDB.Tests.Tests;
 

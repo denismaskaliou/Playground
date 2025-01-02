@@ -2,7 +2,7 @@ using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using MongoDB.Tests.Context;
+using MongoDB.Tests.Infrastructure;
 using MongoDB.Tests.Scripts;
 
 namespace MongoDB.Tests.Tests;

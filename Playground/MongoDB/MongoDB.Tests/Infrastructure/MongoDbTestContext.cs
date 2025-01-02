@@ -1,18 +1,19 @@
 using System.Diagnostics;
 using MongoDB.Driver;
-using MongoDB.Shared.Mappings;
 using MongoDB.Tests.Scripts;
 using Xunit.Abstractions;
 
-namespace MongoDB.Tests.Context;
+namespace MongoDB.Tests.Infrastructure;
 
 public class MongoDbTestContext : IDisposable
 {
     private const string ConnectionString = "mongodb://admin:1234@localhost:27017/";
     private const string DatabaseName = "playground";
+
     private readonly OrderProductsAndUsersScript _script;
 
     public IMongoDatabase Database { get; set; }
+    public IMongoCollection<Order> Orders => Database.GetCollection<Order>("Orders");
 
     public MongoDbTestContext()
     {

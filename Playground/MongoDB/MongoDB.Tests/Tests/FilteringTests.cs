@@ -1,30 +1,18 @@
-using System.Diagnostics;
 using System.Linq.Expressions;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using MongoDB.Tests.Context;
+using MongoDB.Tests.Infrastructure;
 using MongoDB.Tests.Infrastructure.Models;
 using MongoDB.Tests.Scripts;
-using Xunit.Abstractions;
 
 namespace MongoDB.Tests.Tests;
 
-public class FilteringTests(
-    MongoDbTestContext testContext,
-    ITestOutputHelper output) : IClassFixture<MongoDbTestContext>
+public class FilteringTests(MongoDbTestContext db) : IClassFixture<MongoDbTestContext>
 {
-    private IMongoCollection<Order> Orders => testContext.Database.GetCollection<Order>("Orders");
-
     [Fact]
-    public async Task InitData_Async()
+    public async Task Find_ProductsByFilter()
     {
-        await testContext.InitDataAsync(shouldSuppress: true);
-    }
-
-    [Fact]
-    public async Task Find_ProductsWithFilter_Async()
-    {
-        var query = Orders
+        var query = db.Orders
             .Find(Builders<Order>.Filter.ElemMatch(o => o.Products, t => t.Name == "Shoes"))
             .Project(t => t.Products.Where(p => p.Name == "Shoes"));
 
@@ -37,7 +25,7 @@ public class FilteringTests(
     {
         Expression<Func<Product, bool>> filter = t => t.Name == "Shoes";
 
-        var query = Orders
+        var query = db.Orders
             .Find(Builders<Order>.Filter.ElemMatch(o => o.Products, filter))
             .Project(o => o.Products.Where(t => t.Name == "Shoes"));
 
@@ -54,7 +42,7 @@ public class FilteringTests(
             Builders<UnwindProducts>.Filter.Exists(t => t.Products.Name)
         );
 
-        var query = Orders.Aggregate()
+        var query = db.Orders.Aggregate()
             .Match(ordersFilter)
             .Unwind<Order, UnwindProducts>(o => o.Products)
             .Match(unwindProductsFilter)
@@ -70,7 +58,7 @@ public class FilteringTests(
             p.Name == "Shoes" &
             p.Sizes.Any(s => s.Label == "Small");
 
-        var query = Orders.Aggregate()
+        var query = db.Orders.Aggregate()
             .Match(Builders<Order>.Filter.ElemMatch(o => o.Products, orderFilter))
             .Unwind<Order, UnwindProducts>(o => o.Products)
             .Match(orderFilter.ToUnwindProductsFilter())
@@ -82,7 +70,7 @@ public class FilteringTests(
     [Fact]
     public async Task Find_ProductsWithQueryable_Async()
     {
-        var query = Orders.AsQueryable()
+        var query = db.Orders.AsQueryable()
             .SelectMany(t => t.Products.Where(p => p.Name == "Shoes"));
 
         var products = await query.ToListAsync();
@@ -95,12 +83,22 @@ public class FilteringTests(
             p.Name == "Shoes" &
             p.Sizes.Any(s => s.Label == "Small");
 
-        var query = Orders.Aggregate()
+        var query = db.Orders.Aggregate()
             .Match(Builders<Order>.Filter.ElemMatch(o => o.Products, orderFilter))
             .Unwind<Order, UnwindProducts>(o => o.Products)
             .ReplaceRoot(t => t.Products)
             .Match(orderFilter);
 
         var products = await query.ToListAsync();
+    }
+
+    [Fact]
+    public async Task Find_ProductsForeach_Async()
+    {
+        var productslist = new List<Product>();
+
+        await db.Orders
+            .Find(Builders<Order>.Filter.ElemMatch(o => o.Products, t => t.Name == "Shoes"))
+            .ForEachAsync(order => { productslist.AddRange(order.Products.Where(p => p.Name == "Shoes")); });
     }
 }

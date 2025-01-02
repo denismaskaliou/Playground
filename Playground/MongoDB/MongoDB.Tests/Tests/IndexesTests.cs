@@ -1,5 +1,5 @@
 using MongoDB.Driver;
-using MongoDB.Tests.Context;
+using MongoDB.Tests.Infrastructure;
 using MongoDB.Tests.Scripts;
 using Xunit.Abstractions;
 
